@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모바일 신분증</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2a6cff">
+
+<style>
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f2f2f2;
+}
+
+/* 상단 */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  background: #f0f0f0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.logo img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 8px;
+}
+
+/* 카드 */
+.card {
+  margin: 20px 20px 0 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 15px 15px 0 0;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 사진 */
+.photo {
+  display: flex;
+  justify-content: center;
+}
+
+.photo img {
+  width: 180px;
+  border-radius: 10px;
+}
+
+/* 아래 */
+.bottom-area {
+  margin-top: auto;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.address {
+  font-size: 14px;
+  width: 55%;
+}
+
+.qr img {
+  width: 100px;
+}
+
+.progress {
+  height: 6px;
+  background: #ddd;
+  border-radius: 5px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: #2a6cff;
+  width: 100%;
+  transition: 1s linear;
+}
+
+.timer-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #2a6cff;
+  margin-top: 5px;
+}
+
+.guide {
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  margin-top: 10px;
+}
+
+.button {
+  margin: 0 20px 20px 20px;
+  background: linear-gradient(90deg, #2a6cff, #003ecb);
+  color: white;
+  padding: 18px;
+  text-align: center;
+  border-radius: 0 0 15px 15px;
+  font-weight: bold;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">
+    <img src="https://i.postimg.cc/wM8q0fxT/IMG-6264.jpg">
+  </div>
+  주민등록증 모바일 확인서비스
+</div>
+
+<div class="card">
+
+  <div class="photo">
+    <img src="https://i.postimg.cc/mrgtH5k8/IMG-7790.jpg">
+  </div>
+
+  <div class="bottom-area">
+
+    <div class="info-row">
+      <div class="address">
+        경상남도 창원시 마산합포구
+      </div>
+
+      <div class="qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://example.com">
+      </div>
+    </div>
+
+    <div class="progress">
+      <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="timer-row">
+      <div>남은시간</div>
+      <div id="time">30초</div>
+    </div>
+
+    <div class="guide">
+      QR코드를 리더기에 스캔하세요
+    </div>
+
+  </div>
+
+</div>
+
+<div class="button">
+  상세정보 표시
+</div>
+
+<script>
+let t = 30;
+const total = 30;
+const timeEl = document.getElementById("time");
+const bar = document.getElementById("bar");
+
+setInterval(() => {
+  t--;
+
+  if (t <= 0) {
+    t = 20; // ⭐ 0초 되면 20초로 반복
+  }
+
+  timeEl.textContent = t + "초";
+  bar.style.width = (t / total * 100) + "%";
+
+}, 1000);
+
+/* 앱처럼 실행 (PWA) */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+
+</body>
+</html>
